@@ -160,7 +160,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                     ""id"": ""9c68efc2-d804-494f-8005-047b53788275"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(y=0),NormalizeVector2,StickDeadzone"",
+                    ""processors"": ""ScaleVector2(x=0.1,y=0),NormalizeVector2,StickDeadzone"",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Looking"",
                     ""isComposite"": false,
