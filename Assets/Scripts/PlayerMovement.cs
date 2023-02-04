@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 using System;
 
 public class PlayerMovement : MonoBehaviour
@@ -17,11 +18,19 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float rStaminaLooking;
     [SerializeField] private float rStaminaAvoiding;
+    [SerializeField] private float lostStamina;
 
-    [SerializeReference] private float recoverTime;
+    [SerializeField] private float recoverTime;
     private float timer;
     private bool onMovement;
     private bool looking;
+
+    [SerializeField] private PostProcessVolume pp;
+    private Vignette vg;
+    private ColorGrading cg;
+    private float eyelid;
+
+    [SerializeField] public bool godMode;
 
     public static Action onBeingLooked;
 
@@ -41,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
         
         onMovement = false;
         looking = false;
+
+        pp.profile.TryGetSettings(out vg);
+        pp.profile.TryGetSettings(out cg);
     }
 
     private void OnDisable()
@@ -52,11 +64,15 @@ public class PlayerMovement : MonoBehaviour
     {
         //yRotation += Input.GetAxisRaw("Mouse X") * Time.deltaTime * 100;
 
+        // Movement and Rotation
+
         transform.rotation = Quaternion.Euler(0, cam.transform.rotation.eulerAngles.y, 0);
 
         Vector2 inputVector = inputSystem.Player.Movement.ReadValue<Vector2>();
 
         inputVector.y = Mathf.Clamp(inputVector.y, 0, 1);
+
+        // Stamina Control
 
         if (stamina > 0)
             rb.velocity = inputVector.y * transform.forward * playerSpeed;
@@ -67,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         {
             onMovement = true;
             timer = recoverTime;
-            if (stamina > 0) stamina -= 0.05f;
+            if (stamina > 0 && !godMode) stamina -= lostStamina;
         }
 
         if (rb.velocity == Vector3.zero) onMovement = false;
@@ -78,13 +94,16 @@ public class PlayerMovement : MonoBehaviour
             if (timer <= 0) RecoverStamina();
         }
 
+        stamina = Mathf.Clamp(stamina, 0, 100);
         staminaBar.value = stamina;
+
+        // Looking
 
         RaycastHit hit;
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
         {
-            if (hit.transform.tag == "AI")
+            if (hit.transform.tag == "AI" && stamina > 0)
             {
                 looking = true;
                 onBeingLooked?.Invoke();
@@ -92,6 +111,17 @@ public class PlayerMovement : MonoBehaviour
 
             else looking = false;
         }
+
+        // Eyelid effect
+
+        vg.intensity.value = 0.36f + Mathf.Clamp((0.24f * (100f - stamina)) / 100f, 0f, 0.24f);
+
+        eyelid = 1f - Mathf.Clamp((1f * (100f - stamina)) / 100f, 0f, 1f);
+
+        cg.colorFilter.value.r = eyelid;
+        cg.colorFilter.value.g = eyelid;
+        cg.colorFilter.value.b = eyelid;
+
     }
 
     private void RecoverStamina()
