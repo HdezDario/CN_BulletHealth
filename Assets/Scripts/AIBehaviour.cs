@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public class AIBehaviour : MonoBehaviour
@@ -52,6 +53,11 @@ public class AIBehaviour : MonoBehaviour
         {
             Debug.Log("cazando");
             isChasing = true;
+        }
+
+        else if (other.tag == "Player")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

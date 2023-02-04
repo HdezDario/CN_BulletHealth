@@ -11816,7 +11816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1483497421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12755,7 +12755,7 @@ MonoBehaviour:
   staminaBar: {fileID: 191599438}
   rStaminaLooking: 0.015
   rStaminaAvoiding: 0.035
-  lostStamina: 0.025
+  lostStamina: 0.04
   recoverTime: 3
   pp: {fileID: 1483497422}
   godMode: 0
@@ -16106,9 +16106,10 @@ GameObject:
   - component: {fileID: 2112432403}
   - component: {fileID: 2112432405}
   - component: {fileID: 2112432404}
+  - component: {fileID: 2112432406}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16161,6 +16162,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 1
+--- !u!136 &2112432406
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112432402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &2117825194
 GameObject:
   m_ObjectHideFlags: 0
