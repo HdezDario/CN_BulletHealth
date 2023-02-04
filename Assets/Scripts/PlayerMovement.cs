@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,9 +14,16 @@ public class PlayerMovement : MonoBehaviour
     private InputSystem inputSystem;
     [SerializeField] private float stamina;
     [SerializeField] private Slider staminaBar;
+
+    [SerializeField] private float rStaminaLooking;
+    [SerializeField] private float rStaminaAvoiding;
+
     [SerializeReference] private float recoverTime;
     private float timer;
-    [SerializeField] private bool onMovement;
+    private bool onMovement;
+    private bool looking;
+
+    public static Action onBeingLooked;
 
     private void OnEnable()
     {
@@ -31,7 +38,9 @@ public class PlayerMovement : MonoBehaviour
         staminaBar.value = stamina;
         recoverTime = 3f;
         timer = recoverTime;
+        
         onMovement = false;
+        looking = false;
     }
 
     private void OnDisable()
@@ -71,11 +80,27 @@ public class PlayerMovement : MonoBehaviour
 
         staminaBar.value = stamina;
 
-        //rb.velocity = new Vector3(inputVector.x * playerSpeed, 0, inputVector.y * playerSpeed);
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+        {
+            if (hit.transform.tag == "AI")
+            {
+                looking = true;
+                onBeingLooked?.Invoke();
+            }
+
+            else looking = false;
+        }
     }
 
     private void RecoverStamina()
     {
-        if (stamina < 100) stamina += 0.1f;
+        if (stamina < 100)
+        {
+            if (looking)
+                stamina += rStaminaLooking;
+            else stamina += rStaminaAvoiding;
+        }
     }
 }
