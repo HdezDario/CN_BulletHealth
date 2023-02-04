@@ -28,8 +28,11 @@ public class AIBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (agent.remainingDistance > 100f)
+            agent.speed = chaseSpeed;
+        else agent.speed = normalSpeed;
+        
         agent.destination = player.transform.position;
-        if (isChasing) agent.speed = normalSpeed;
     }
 
     private void BeingObserved()
@@ -37,25 +40,25 @@ public class AIBehaviour : MonoBehaviour
         agent.speed = reducedSpeed;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "ChaseZone")
-        {
-            Debug.Log("empieza cacería");
-            agent.speed = chaseSpeed;
-            isChasing = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.tag == "ChaseZone")
+    //    {
+    //        Debug.Log("empieza cacería");
+    //        agent.speed = chaseSpeed;
+    //        isChasing = false;
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "ChaseZone")
-        {
-            Debug.Log("cazando");
-            isChasing = true;
-        }
+        //if (other.tag == "ChaseZone")
+        //{
+        //    Debug.Log("cazando");
+        //    isChasing = true;
+        //}
 
-        else if (other.tag == "Player")
+        if (other.tag == "Player")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
