@@ -12,7 +12,7 @@ public class TimeManager : MonoBehaviour
     private float timer;
     public static int randSeed;
 
-    [SerializeField] private NavMeshData navigation;
+    //[SerializeField] private NavMeshBuilder navigation;
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class TimeManager : MonoBehaviour
             randSeed = UnityEngine.Random.Range(1, 5);
             OnCicle?.Invoke();
 
-            //navigation
+            //navigation.bui
             
             timer = minuteToRealTime;
         }

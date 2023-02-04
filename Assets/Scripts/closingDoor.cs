@@ -7,6 +7,7 @@ public class closingDoor : MonoBehaviour
     private bool isDown;
     private int randInt;
 
+
     private void OnEnable()
     {
         TimeManager.OnCicle += CloseDoor;
@@ -43,7 +44,7 @@ public class closingDoor : MonoBehaviour
             randInt = Random.Range(1, 5);
 
             if (TimeManager.randSeed == randInt)
-            {
+            {  
                 transform.position = new Vector3(transform.position.x, 4, transform.position.z);
                 isDown = true;
             }
