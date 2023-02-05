@@ -12,6 +12,7 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] public bool isWin;
 
     [SerializeField] GameObject cinematic;
+    [SerializeField] GameObject winCinematic;
 
     private void OnEnable()
     {
@@ -80,6 +81,6 @@ public class InteractableObject : MonoBehaviour
 
     private void WonGame()
     {
-
+        winCinematic.SetActive(true);
     }
 }

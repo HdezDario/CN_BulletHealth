@@ -46,6 +46,11 @@ public class GameManager : MonoBehaviour
 
     public void OnGameFinish()
     {
-        SceneManager.LoadScene("0");
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnLooseGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

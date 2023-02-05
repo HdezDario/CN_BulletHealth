@@ -9,7 +9,8 @@ public class AICollision : MonoBehaviour
     [SerializeField] private float minuteToRealTime;
     private float timer;
     private float randFloat;
-    [SerializeField] private NavMeshAgent agent;
+    private NavMeshAgent agent;
+    [SerializeField] private GameObject deathAnimation; 
 
     private void OnEnable()
     {
@@ -35,7 +36,7 @@ public class AICollision : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            deathAnimation.SetActive(true);
         }
     }
 }
