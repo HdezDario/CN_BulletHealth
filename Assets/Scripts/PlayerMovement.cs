@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Image pointer;
 
     [SerializeField] private float playerSpeed;
-    private InputSystem inputSystem;
+    public InputSystem inputSystem;
     [SerializeField] public float stamina;
     [SerializeField] private Slider staminaBar;
 

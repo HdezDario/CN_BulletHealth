@@ -15,11 +15,15 @@ public class KeyMovement : MonoBehaviour
     private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
+        
+        agent.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        agent.updatePosition = true;
+
         if (agent.enabled)
             dist = agent.remainingDistance;
         if (!agent.pathPending && dist < 0.5f)
