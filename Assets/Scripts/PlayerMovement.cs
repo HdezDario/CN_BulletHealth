@@ -141,7 +141,6 @@ public class PlayerMovement : MonoBehaviour
         cg.colorFilter.value.r = eyelid;
         cg.colorFilter.value.g = eyelid;
         cg.colorFilter.value.b = eyelid;
-
     }
 
     private void RecoverStamina()
@@ -152,6 +151,17 @@ public class PlayerMovement : MonoBehaviour
                 stamina += rStaminaLooking;
             else stamina += rStaminaAvoiding;
         }
+    }
+
+    public void startCMConfig()
+    {
+        stamina = 100;
+
+        vg.intensity.value = 0.36f;
+
+        cg.colorFilter.value.r = 1f;
+        cg.colorFilter.value.g = 1f;
+        cg.colorFilter.value.b = 1f;
     }
 
     public void DisableGodMode()
