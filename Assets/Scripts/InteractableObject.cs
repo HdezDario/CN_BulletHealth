@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class InteractableObject : MonoBehaviour
 {
     public bool isInteractable;
     public bool wasInteracted;
+
+    public static Action OnCollected;
 
     [SerializeField] private bool isStartGame;
     [SerializeField] private bool isKey;
@@ -71,6 +74,7 @@ public class InteractableObject : MonoBehaviour
         float stamina = FindObjectOfType<PlayerMovement>().stamina = 100;
         Debug.Log(stamina);
 
+        OnCollected?.Invoke();
         Destroy(this.gameObject);
     }
 

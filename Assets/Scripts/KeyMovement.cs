@@ -15,11 +15,16 @@ public class KeyMovement : MonoBehaviour
     private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
-        
         agent.enabled = true;
+
+        InteractableObject.OnCollected += Collected;
     }
 
-    // Update is called once per frame
+    private void OnDisable()
+    {
+        InteractableObject.OnCollected -= Collected;
+    }
+
     void Update()
     {
         agent.updatePosition = true;
@@ -38,5 +43,10 @@ public class KeyMovement : MonoBehaviour
             index++;
         else if (index < points.Count)
             index = 0;
+    }
+
+    private void Collected()
+    {
+        Destroy(this.gameObject);
     }
 }
