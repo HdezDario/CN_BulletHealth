@@ -38,6 +38,7 @@ public class AIBehaviour : MonoBehaviour
 
     private void BeingObserved()
     {
+        Debug.Log("te veo");
         agent.speed = reducedSpeed;
     }
 

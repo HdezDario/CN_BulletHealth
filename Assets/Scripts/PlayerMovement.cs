@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.InputSystem;
 using System;
 
 public class PlayerMovement : MonoBehaviour
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private Vignette vg;
     private ColorGrading cg;
     private float eyelid;
+    [SerializeField] private Image dot;
 
     [SerializeField] public bool godMode;
 
@@ -110,6 +112,24 @@ public class PlayerMovement : MonoBehaviour
             }
 
             else looking = false;
+
+            if (hit.transform.tag == "Interactable")
+            {
+                if (hit.transform.GetComponent<InteractableObject>().isInteractable)
+                {
+                    dot.color = Color.gray;
+
+                    if (inputSystem.Player.Interact.WasPerformedThisFrame())
+                    {
+                        Debug.Log("Interactuado");
+                        hit.transform.GetComponent<InteractableObject>().isInteractable = false;
+                        hit.transform.GetComponent<InteractableObject>().wasInteracted = true;
+                        dot.color = Color.white;
+                    }     
+                }  
+            }
+
+            else dot.color = Color.white;
         }
 
         // Eyelid effect
@@ -132,5 +152,10 @@ public class PlayerMovement : MonoBehaviour
                 stamina += rStaminaLooking;
             else stamina += rStaminaAvoiding;
         }
+    }
+
+    public void DisableGodMode()
+    {
+        godMode = false;
     }
 }
