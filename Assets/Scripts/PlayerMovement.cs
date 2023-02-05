@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float playerSpeed;
     private InputSystem inputSystem;
-    [SerializeField] private float stamina;
+    [SerializeField] public float stamina;
     [SerializeField] private Slider staminaBar;
 
     [SerializeField] private float rStaminaLooking;

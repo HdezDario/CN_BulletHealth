@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public class AIBehaviour : MonoBehaviour
@@ -12,11 +11,13 @@ public class AIBehaviour : MonoBehaviour
     [SerializeField] private float chaseSpeed;
     private NavMeshAgent agent;
 
-    private bool isChasing;
+    private PlayerMovement pm;
 
     private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
+        pm = FindObjectOfType<PlayerMovement>();
+
         PlayerMovement.onBeingLooked += BeingObserved;
     }
 
@@ -28,10 +29,10 @@ public class AIBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.remainingDistance > 100f)
+        if (agent.remainingDistance > 100f || pm.stamina == 0)
             agent.speed = chaseSpeed;
         else agent.speed = normalSpeed;
-        
+ 
         agent.destination = player.transform.position;
     }
 
@@ -57,10 +58,5 @@ public class AIBehaviour : MonoBehaviour
         //    Debug.Log("cazando");
         //    isChasing = true;
         //}
-
-        if (other.tag == "Player")
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
     }
 }
