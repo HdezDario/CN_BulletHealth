@@ -12,17 +12,14 @@ public class KeyMovement : MonoBehaviour
     private float dist;
     [SerializeField] private int index;
 
+    public bool isCollected;
+
     private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
 
-        InteractableObject.OnCollected += Collected;
-    }
-
-    private void OnDisable()
-    {
-        InteractableObject.OnCollected -= Collected;
+        isCollected = false;
     }
 
     void Update()
@@ -33,6 +30,9 @@ public class KeyMovement : MonoBehaviour
             dist = agent.remainingDistance;
         if (!agent.pathPending && dist < 0.5f)
             NextPosition();
+
+        if (isCollected)
+            Destroy(this.gameObject);
     }
 
     public void NextPosition()
@@ -43,10 +43,5 @@ public class KeyMovement : MonoBehaviour
             index++;
         else if (index < points.Count)
             index = 0;
-    }
-
-    private void Collected()
-    {
-        Destroy(this.gameObject);
     }
 }

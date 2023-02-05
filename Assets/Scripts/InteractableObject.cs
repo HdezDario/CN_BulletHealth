@@ -74,7 +74,7 @@ public class InteractableObject : MonoBehaviour
         float stamina = FindObjectOfType<PlayerMovement>().stamina = 100;
         Debug.Log(stamina);
 
-        OnCollected?.Invoke();
+        GetComponentInParent<KeyMovement>().isCollected = true;
         Destroy(this.gameObject);
     }
 
