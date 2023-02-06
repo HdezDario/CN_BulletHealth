@@ -12,6 +12,11 @@ public class MenuManager : MonoBehaviour
 
     public void OnExit()
     {
+        Application.Quit();
+    }
 
+    private void OnApplicationQuit()
+    {
+        StopAllCoroutines();
     }
 }
