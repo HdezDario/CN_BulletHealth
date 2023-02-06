@@ -61,13 +61,16 @@ public class InteractableObject : MonoBehaviour
 
     private void StartGame()
     {
+        isStartGame = false;
+        wasInteracted = false;
         cinematic.SetActive(true);
     }
 
     private void KeyCollected()
     {
         Debug.Log("Key Collected");
-        
+        wasInteracted = false;
+
         GameManager.keysCollected += 1;
         Debug.Log(GameManager.keysCollected);
 

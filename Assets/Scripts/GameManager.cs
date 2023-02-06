@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     public void OnGameFinish()
     {
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(0);
     }
 
